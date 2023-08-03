@@ -13,7 +13,6 @@ def test_run_cards():
 
 
 def test_patch_get_path(monkeypatch, tmp_path):
-
     monkeypatch.setattr(
         cards.cli,
         "get_path",
@@ -33,3 +32,12 @@ def test_patch_home(monkeypatch, tmp_path):
     )
 
     assert run_cards("config") == str(full_cards_dir)
+
+
+def test_patch_env_var(monkeypatch, tmp_path):
+    monkeypatch.setenv(
+        "CARDS_DB_DIR",
+        str(tmp_path)
+    )
+
+    assert run_cards("config") == str(tmp_path)
