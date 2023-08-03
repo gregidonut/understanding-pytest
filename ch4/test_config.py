@@ -10,3 +10,16 @@ def run_cards(*params):
 
 def test_run_cards():
     assert run_cards("version") == cards.__version__
+
+
+def test_patch_get_path(monkeypatch, tmp_path):
+    def fake_get_path():
+        return tmp_path
+
+    monkeypatch.setattr(
+        cards.cli,
+        "get_path",
+        fake_get_path
+    )
+
+    assert run_cards("config") == str(tmp_path)
