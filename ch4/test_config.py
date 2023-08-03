@@ -23,3 +23,18 @@ def test_patch_get_path(monkeypatch, tmp_path):
     )
 
     assert run_cards("config") == str(tmp_path)
+
+
+def test_patch_home(monkeypatch, tmp_path):
+    full_cards_dir = tmp_path / "cards_db"
+
+    def fake_home():
+        return tmp_path
+
+    monkeypatch.setattr(
+        cards.cli.pathlib.Path,
+        "home",
+        fake_home,
+    )
+
+    assert run_cards("config") == str(full_cards_dir)
