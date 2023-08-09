@@ -58,3 +58,11 @@ def test_finish_func(cards_db, start_state):
     cards_db.finish(i)
     c = cards_db.get_card(i)
     assert c.state == "done"
+
+
+@pytest.mark.smoke
+@pytest.mark.exception
+def test_finish_non_existent(cards_db):
+    i = 123  # any number will do, db is empty
+    with pytest.raises(InvalidCardId):
+        cards_db.finish(i)
